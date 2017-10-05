@@ -91,7 +91,7 @@ function solve(problem::EstimationProblem, solver::LocalWeightRegress)
 
         idxs, dists = knn(kdtree, x, k)
 
-        Xₗ = [ones(k) X[:,idxs]']
+        Xₗ = [ones(eltype(X), k) X[:,idxs]']
         zₗ = z[idxs]
 
         Wₗ = diagm([kernel(wfun, x, X[:,j]) for j in idxs])
@@ -99,7 +99,7 @@ function solve(problem::EstimationProblem, solver::LocalWeightRegress)
         # weighted least-squares
         θₗ = Xₗ'*Wₗ*Xₗ \ Xₗ'*Wₗ*zₗ
 
-        varμ[location] = θₗ ⋅ [1., x...]
+        varμ[location] = θₗ ⋅ [one(eltype(x)), x...]
         varσ[location] = minimum(dists)
       end
     end
