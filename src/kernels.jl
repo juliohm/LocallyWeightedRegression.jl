@@ -18,6 +18,7 @@ end
 (kern::ExponentialKernel)(x, y) = begin
   exp(-kern.α*norm(x-y))
 end
+ExponentialKernel() = ExponentialKernel(1.)
 
 struct GaussianKernel{T<:Real}
   α::T
@@ -25,3 +26,4 @@ end
 (kern::GaussianKernel)(x, y) = begin
   exp(-kern.α*norm(x-y)^2)
 end
+GaussianKernel() = GaussianKernel(1.)
