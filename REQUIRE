@@ -3,5 +3,4 @@ Reexport
 GeoStatsBase
 GeoStatsDevTools
 NearestNeighbors
-MLKernels
 Distances

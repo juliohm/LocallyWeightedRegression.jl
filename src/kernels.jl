@@ -12,26 +12,16 @@
 ## ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 ## OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-__precompile__()
+struct ExponentialKernel{T<:Real}
+  α::T
+end
+(kern::ExponentialKernel)(x, y) = begin
+  exp(-kern.α*norm(x-y))
+end
 
-module LocallyWeightedRegression
-
-importall GeoStatsBase
-using GeoStatsDevTools
-
-using Reexport
-using NearestNeighbors
-@reexport using Distances
-
-include("kernels.jl")
-include("lwr.jl")
-
-export
-  # kernels
-  ExponentialKernel,
-  GaussianKernel,
-
-  # solver
-  LocalWeightRegress
-
+struct GaussianKernel{T<:Real}
+  α::T
+end
+(kern::GaussianKernel)(x, y) = begin
+  exp(-kern.α*norm(x-y)^2)
 end
