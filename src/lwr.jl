@@ -92,7 +92,7 @@ function solve(problem::EstimationProblem, solver::LocalWeightRegress)
         rₗ = Wₗ*Xₗ*(Xₗ'*Wₗ*Xₗ\xₗ)
 
         varμ[location] = θₗ ⋅ xₗ
-        varσ[location] = rₗ ⋅ rₗ
+        varσ[location] = norm(rₗ)
       end
     end
 
