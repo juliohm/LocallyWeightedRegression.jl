@@ -13,6 +13,8 @@ lookup. Locally weighted regression (LWR or LOESS) is a popular non-parametric m
 learning, however it still has poor statistical properties compared to other estimation methods
 such as Kriging that explicitly model spatial correlation.
 
+In the current implementation, the estimation variance is computed assuming Gaussian residuals.
+
 ## Installation
 
 Get the latest stable release with Julia's package manager:
