@@ -21,7 +21,7 @@ Locally weighted regression (LOESS) estimation solver.
 
 * `neighbors` - Number of neighbors (default to all data locations)
 * `kernel`    - A kernel (or weight) function (default to ExponentialKernel())
-* `metric`    - A metric defined in Distances.jl (default to Euclidean())
+* `distance`  - A distance defined in Distances.jl (default to Euclidean())
 
 ### References
 
@@ -30,7 +30,7 @@ Cleveland 1979. *Robust Locally Weighted Regression and Smoothing Scatterplots*
 @estimsolver LocalWeightRegress begin
   @param neighbors = nothing
   @param kernel = ExponentialKernel()
-  @param metric = Euclidean()
+  @param distance = Euclidean()
 end
 
 function solve(problem::EstimationProblem, solver::LocalWeightRegress)
@@ -61,7 +61,7 @@ function solve(problem::EstimationProblem, solver::LocalWeightRegress)
 
     if ndata > 0
       # fit search tree
-      kdtree = KDTree(X, varparams.metric)
+      kdtree = KDTree(X, varparams.distance)
 
       # determine number of nearest neighbors to use
       k = varparams.neighbors == nothing ? ndata : varparams.neighbors
