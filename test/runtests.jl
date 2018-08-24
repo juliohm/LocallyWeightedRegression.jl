@@ -1,9 +1,8 @@
 using GeoStats
 using LocallyWeightedRegression
 using Plots; gr()
-using Random
 using VisualRegressionTests
-using Test
+using Test, Random
 
 # list of maintainers
 maintainers = ["juliohm"]
