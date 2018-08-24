@@ -1,12 +1,9 @@
 using GeoStats
 using LocallyWeightedRegression
 using Plots; gr()
-using Base.Test
+using Random
 using VisualRegressionTests
-
-# setup GR backend for Travis CI
-ENV["GKSwstype"] = "100"
-ENV["PLOTS_TEST"] = "true"
+using Test
 
 # list of maintainers
 maintainers = ["juliohm"]
@@ -17,23 +14,23 @@ istravislinux = "TRAVIS" ∈ keys(ENV) && ENV["TRAVIS_OS_NAME"] == "linux"
 datadir = joinpath(@__DIR__,"data")
 
 @testset "1D regression problem" begin
-  srand(2017)
+  Random.seed!(2017)
 
   N = 100
-  x = linspace(0,1, N)
+  x = range(0, stop=1, length=N)
   y = x.^2 .+ [i/1000*randn() for i=1:N]
 
-  geodata = GeoDataFrame(DataFrames.DataFrame(features=x, response=y), [:features])
-  domain = bounding_grid(geodata, [N])
-  problem = EstimationProblem(geodata, domain, :response)
+  geodata = PointSetData(Dict(:y => y), reshape(x, 1, length(x)))
+  domain  = bounding_grid(geodata, [N])
+  problem = EstimationProblem(geodata, domain, :y)
 
-  solver = LocalWeightRegress(:response => @NT(kernel=ExponentialKernel(10.)))
+  solver = LocalWeightRegress(:y => (kernel=ExponentialKernel(10.),))
 
   solution = solve(problem, solver)
 
   results = digest(solution)
-  yhat = results[:response][:mean]
-  yvar = results[:response][:variance]
+  yhat = results[:y][:mean]
+  yvar = results[:y][:variance]
 
   if ismaintainer || istravislinux
     function plot_solution(fname)

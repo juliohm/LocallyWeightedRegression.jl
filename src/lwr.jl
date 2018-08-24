@@ -1,16 +1,7 @@
-## Copyright (c) 2017, Júlio Hoffimann Mendes <juliohm@stanford.edu>
-##
-## Permission to use, copy, modify, and/or distribute this software for any
-## purpose with or without fee is hereby granted, provided that the above
-## copyright notice and this permission notice appear in all copies.
-##
-## THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-## WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-## MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-## ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-## WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-## ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-## OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+# ------------------------------------------------------------------
+# Copyright (c) 2017, Júlio Hoffimann Mendes <juliohm@stanford.edu>
+# Licensed under the ISC License. See LICENCE in the project root.
+# ------------------------------------------------------------------
 
 """
     LocalWeightRegress(var₁=>param₁, var₂=>param₂, ...)
@@ -55,45 +46,48 @@ function solve(problem::EstimationProblem, solver::LocalWeightRegress)
     # number of data points for variable
     ndata = length(z)
 
+    @assert ndata > 0 "estimation requires data"
+
     # allocate memory
-    varμ = Vector{V}(npoints(pdomain))
-    varσ = Vector{V}(npoints(pdomain))
+    varμ = Vector{V}(undef, npoints(pdomain))
+    varσ = Vector{V}(undef, npoints(pdomain))
 
-    if ndata > 0
-      # fit search tree
-      kdtree = KDTree(X, varparams.distance)
+    # fit search tree
+    kdtree = KDTree(X, varparams.distance)
 
-      # determine number of nearest neighbors to use
-      k = varparams.neighbors == nothing ? ndata : varparams.neighbors
+    # determine number of nearest neighbors to use
+    k = varparams.neighbors == nothing ? ndata : varparams.neighbors
 
-      @assert k ≤ ndata "number of neighbors must be smaller or equal to number of data points"
+    @assert k ≤ ndata "number of neighbors must be smaller or equal to number of data points"
 
-      # determine kernel (or weight) function
-      kern = varparams.kernel
+    # determine kernel (or weight) function
+    kern = varparams.kernel
 
-      # estimation loop
-      for location in SimplePath(pdomain)
-        x = coordinates(pdomain, location)
+    # pre-allocate memory for coordinates
+    coords = MVector{ndims(pdomain),coordtype(pdomain)}(undef)
 
-        idxs, dists = knn(kdtree, x, k)
+    # estimation loop
+    for location in SimplePath(pdomain)
+      coordinates!(coords, pdomain, location)
 
-        Xₗ = [ones(eltype(X), k) X[:,idxs]']
-        zₗ = z[idxs]
+      idxs, dists = knn(kdtree, coords, k)
 
-        Wₗ = diagm([kern(x, X[:,j]) for j in idxs])
+      Xₗ = [ones(eltype(X), k) X[:,idxs]']
+      zₗ = view(z, idxs)
 
-        # weighted least-squares
-        θₗ = Xₗ'*Wₗ*Xₗ \ Xₗ'*Wₗ*zₗ
+      Wₗ = Diagonal([kern(coords, X[:,j]) for j in idxs])
 
-        # add intercept term to estimation location
-        xₗ = [one(eltype(x)), x...]
+      # weighted least-squares
+      θₗ = Xₗ'*Wₗ*Xₗ \ Xₗ'*Wₗ*zₗ
 
-        # linear combination of response values
-        rₗ = Wₗ*Xₗ*(Xₗ'*Wₗ*Xₗ\xₗ)
+      # add intercept term to estimation location
+      xₗ = [one(eltype(coords)), coords...]
 
-        varμ[location] = θₗ ⋅ xₗ
-        varσ[location] = norm(rₗ)
-      end
+      # linear combination of response values
+      rₗ = Wₗ*Xₗ*(Xₗ'*Wₗ*Xₗ\xₗ)
+
+      varμ[location] = θₗ ⋅ xₗ
+      varσ[location] = norm(rₗ)
     end
 
     push!(μs, var => varμ)

@@ -1,6 +1,7 @@
-julia 0.6
-Reexport
-GeoStatsBase
+julia 0.7
+Reexport 0.2.0
+GeoStatsBase 0.2.0
 GeoStatsDevTools
-NearestNeighbors
-Distances
+NearestNeighbors 0.4.1
+StaticArrays 0.8.3
+Distances 0.7.3
