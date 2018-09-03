@@ -20,7 +20,7 @@ In the current implementation, the estimation variance is computed assuming Gaus
 Get the latest stable release with Julia's package manager:
 
 ```julia
-Pkg.add("LocallyWeightedRegression")
+] add LocallyWeightedRegression
 ```
 
 ## Usage
