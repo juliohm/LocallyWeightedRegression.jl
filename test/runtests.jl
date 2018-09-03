@@ -26,7 +26,7 @@ end
   y = x.^2 .+ [i/1000*randn() for i=1:N]
 
   geodata = PointSetData(Dict(:y => y), reshape(x, 1, length(x)))
-  domain  = bounding_grid(geodata, [N])
+  domain  = boundgrid(geodata, (N,))
   problem = EstimationProblem(geodata, domain, :y)
 
   solver = LocalWeightRegress(:y => (kernel=ExponentialKernel(10.),))
