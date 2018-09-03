@@ -1,6 +1,6 @@
-GR
 Plots
-GeoStats
+GeoStatsBase
+GeoStatsDevTools
 VisualRegressionTests
 ImageMagick
 QuartzImageIO
