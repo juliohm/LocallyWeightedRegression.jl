@@ -29,7 +29,7 @@ end
   domain  = boundgrid(geodata, (N,))
   problem = EstimationProblem(geodata, domain, :y)
 
-  solver = LocalWeightRegress(:y => (kernel=ExponentialKernel(10.),))
+  solver = LocalWeightRegress(:y => (variogram=ExponentialVariogram(range=3/10),))
 
   solution = solve(problem, solver)
 
