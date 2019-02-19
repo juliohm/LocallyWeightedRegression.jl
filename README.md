@@ -1,6 +1,6 @@
 # LocallyWeightedRegression.jl
 
-[![][travis-img]][travis-url] [![][julia-pkg-img]][julia-pkg-url] [![][codecov-img]][codecov-url]
+[![][travis-img]][travis-url] [![][codecov-img]][codecov-url]
 
 This package provides an implementation of locally weighted regression (a.k.a. LOESS) introduced by
 [Cleveland 1979](http://www.stat.washington.edu/courses/stat527/s13/readings/Cleveland_JASA_1979.pdf).
@@ -35,9 +35,6 @@ If you have any questions, please [open an issue](https://github.com/juliohm/Loc
 
 [travis-img]: https://travis-ci.org/juliohm/LocallyWeightedRegression.jl.svg?branch=master
 [travis-url]: https://travis-ci.org/juliohm/LocallyWeightedRegression.jl
-
-[julia-pkg-img]: http://pkg.julialang.org/badges/LocallyWeightedRegression_0.7.svg
-[julia-pkg-url]: http://pkg.julialang.org/?pkg=LocallyWeightedRegression
 
 [codecov-img]: https://codecov.io/gh/juliohm/LocallyWeightedRegression.jl/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/juliohm/LocallyWeightedRegression.jl
