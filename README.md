@@ -27,7 +27,7 @@ Get the latest stable release with Julia's package manager:
 
 This package is part of the [GeoStats.jl](https://github.com/juliohm/GeoStats.jl) framework.
 
-For a simple example of usage, please check [this notebook](docs/Usage.ipynb).
+For a simple example of usage, please check [this notebook](https://nbviewer.jupyter.org/github/juliohm/LocallyWeightedRegression.jl/blob/master/docs/Usage.ipynb).
 
 ## Asking for help
 
