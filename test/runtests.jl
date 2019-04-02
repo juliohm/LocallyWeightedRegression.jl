@@ -5,15 +5,14 @@ using Plots; gr()
 using VisualRegressionTests
 using Test, Pkg, Random
 
-# list of maintainers
-maintainers = ["juliohm"]
+ENV["GKSwstype"] = "100"
 
 # environment settings
+islinux = Sys.islinux()
 istravis = "TRAVIS" ∈ keys(ENV)
-ismaintainer = "USER" ∈ keys(ENV) && ENV["USER"] ∈ maintainers
 datadir = joinpath(@__DIR__,"data")
-
-if ismaintainer
+visualtests = !istravis || (istravis && islinux)
+if !istravis
   Pkg.add("Gtk")
   using Gtk
 end
@@ -33,18 +32,12 @@ end
 
   solution = solve(problem, solver)
 
-  results = digest(solution)
-  yhat = results[:y][:mean]
-  yvar = results[:y][:variance]
+  yhat, yvar = solution[:y]
 
-  if ismaintainer || istravis
-    function plot_solution(fname)
+  if visualtests
+    @plottest begin
       scatter(x, y, label="data", size=(1000,400))
       plot!(x, yhat, ribbon=yvar, fillalpha=.5, label="LWR")
-      png(fname)
-    end
-    refimg = joinpath(datadir,"solution.png")
-
-    @test test_images(VisualTest(plot_solution, refimg), popup=!istravis, tol=0.1) |> success
+    end joinpath(datadir,"solution.png") !istravis
   end
 end
