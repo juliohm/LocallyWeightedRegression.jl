@@ -5,14 +5,12 @@
 module LocallyWeightedRegression
 
 using GeoStatsBase
-using GeoStatsDevTools
 
-using Reexport
 using LinearAlgebra
 using NearestNeighbors
 using StaticArrays
-@reexport using Distances
-@reexport using Variography
+using Distances
+using Variography
 
 import GeoStatsBase: solve
 
