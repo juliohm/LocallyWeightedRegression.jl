@@ -81,7 +81,7 @@ function solve(problem::EstimationProblem, solver::LocalWeightRegress)
     x = MVector{ndims(pdomain),coordtype(pdomain)}(undef)
 
     # estimation loop
-    for location in SimplePath(pdomain)
+    for location in LinearPath(pdomain)
       coordinates!(x, pdomain, location)
 
       inds, dists = knn(kdtree, x, k)
