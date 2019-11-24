@@ -30,6 +30,6 @@ test = ["GeoStatsBase", "Pkg", "Variography", "VisualRegressionTests", "Plots", 
 Distances = "^0.8"
 GeoStatsBase = "^0.6"
 NearestNeighbors = "^0.4"
-StaticArrays = "^0.11"
+StaticArrays = "^0.12"
 Variography = "^0.4"
 julia = "1"
