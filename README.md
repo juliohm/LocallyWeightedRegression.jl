@@ -4,7 +4,7 @@
 
 This package provides an implementation of locally weighted regression (a.k.a. LOESS) introduced by
 [Cleveland 1979](http://www.stat.washington.edu/courses/stat527/s13/readings/Cleveland_JASA_1979.pdf).
-It is the most natural generalization of [InverseDistanceWeighting.jl](https://github.com/juliohm/InverseDistanceWeighting.jl)
+It is the most natural generalization of [InverseDistanceWeighting.jl](https://github.com/JuliaEarth/InverseDistanceWeighting.jl)
 in which one is allowed to use a custom weight function instead of distance-based weights.
 
 Like in the inverse distance weighting scheme, this package makes use of k-d trees from the
@@ -25,16 +25,16 @@ Get the latest stable release with Julia's package manager:
 
 ## Usage
 
-This package is part of the [GeoStats.jl](https://github.com/juliohm/GeoStats.jl) framework.
+This package is part of the [GeoStats.jl](https://github.com/JuliaEarth/GeoStats.jl) framework.
 
-For a simple example of usage, please check [this notebook](https://nbviewer.jupyter.org/github/juliohm/LocallyWeightedRegression.jl/blob/master/docs/Usage.ipynb).
+For a simple example of usage, please check [this notebook](https://nbviewer.jupyter.org/github/JuliaEarth/LocallyWeightedRegression.jl/blob/master/docs/Usage.ipynb).
 
 ## Asking for help
 
-If you have any questions, please [open an issue](https://github.com/juliohm/LocallyWeightedRegression.jl/issues).
+If you have any questions, please [open an issue](https://github.com/JuliaEarth/LocallyWeightedRegression.jl/issues).
 
-[travis-img]: https://travis-ci.org/juliohm/LocallyWeightedRegression.jl.svg?branch=master
-[travis-url]: https://travis-ci.org/juliohm/LocallyWeightedRegression.jl
+[travis-img]: https://travis-ci.org/JuliaEarth/LocallyWeightedRegression.jl.svg?branch=master
+[travis-url]: https://travis-ci.org/JuliaEarth/LocallyWeightedRegression.jl
 
-[codecov-img]: https://codecov.io/gh/juliohm/LocallyWeightedRegression.jl/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/juliohm/LocallyWeightedRegression.jl
+[codecov-img]: https://codecov.io/gh/JuliaEarth/LocallyWeightedRegression.jl/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/JuliaEarth/LocallyWeightedRegression.jl
