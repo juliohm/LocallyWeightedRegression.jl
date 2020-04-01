@@ -24,7 +24,7 @@ end
   x = range(0, stop=1, length=N)
   y = x.^2 .+ [i/1000*randn() for i=1:N]
 
-  sdata   = PointSetData(Dict(:y => y), reshape(x, 1, length(x)))
+  sdata   = PointSetData(OrderedDict(:y => y), reshape(x, 1, length(x)))
   sdomain = RegularGrid((0.,), (1.,), dims=(N,))
   problem = EstimationProblem(sdata, sdomain, :y)
 
