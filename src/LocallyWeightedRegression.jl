@@ -66,7 +66,12 @@ function solve(problem::EstimationProblem, solver::LocalWeightRegress)
       varσ = Vector{V}(undef, npoints(pdomain))
 
       # fit search tree
-      kdtree = KDTree(X, varparams.distance)
+      M = varparams.distance
+      if M isa NearestNeighbors.MinkowskiMetric
+        tree = KDTree(X, M)
+      else
+        tree = BruteTree(X, M)
+      end
 
       # determine number of nearest neighbors to use
       k = varparams.neighbors == nothing ? ndata : varparams.neighbors
@@ -84,7 +89,7 @@ function solve(problem::EstimationProblem, solver::LocalWeightRegress)
       for location in LinearPath(pdomain)
         coordinates!(x, pdomain, location)
 
-        inds, dists = knn(kdtree, x, k)
+        inds, dists = knn(tree, x, k)
 
         Xₗ = [ones(eltype(X), k) X[:,inds]']
         zₗ = view(z, inds)
