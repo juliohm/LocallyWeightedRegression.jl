@@ -27,7 +27,11 @@ Get the latest stable release with Julia's package manager:
 
 This package is part of the [GeoStats.jl](https://github.com/JuliaEarth/GeoStats.jl) framework.
 
-For a simple example of usage, please check [this notebook](https://nbviewer.jupyter.org/github/JuliaEarth/LocallyWeightedRegression.jl/blob/master/docs/Usage.ipynb).
+Please check the available options using Julia's help system:
+
+```julia
+?LocalWeightRegress
+```
 
 ## Asking for help
 
