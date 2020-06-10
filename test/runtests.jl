@@ -28,7 +28,7 @@ end
     sdomain = RegularGrid((0.,), (1.,), dims=(N,))
     problem = EstimationProblem(sdata, sdomain, :y)
 
-    solver = LocalWeightRegress()
+    solver = LocalWeightRegress(:y => (neighbors=10,))
 
     solution = solve(problem, solver)
 
@@ -47,7 +47,7 @@ end
     domain  = RegularGrid{Float64}(100,100)
     problem = EstimationProblem(geodata, domain, :y)
 
-    solver = LocalWeightRegress()
+    solver = LocalWeightRegress(:y => (neighbors=3,))
 
     solution = solve(problem, solver)
 
