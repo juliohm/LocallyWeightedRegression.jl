@@ -24,16 +24,16 @@ Locally weighted regression (LOESS) estimation solver.
 
 * `weightfun` - Weighting function (default to `exp(-h^2/2)`)
 * `distance`  - A distance from Distances.jl (default to `Euclidean()`)
-* `neighbors` - Number of neighbors (default to `5`)
+* `neighbors` - Number of neighbors (default to 20% of the data)
 
 ### References
 
 Cleveland 1979. *Robust Locally Weighted Regression and Smoothing Scatterplots*
 """
 @estimsolver LocalWeightRegress begin
-  @param weightfun = h -> exp(-h^2/2)
+  @param weightfun = h -> exp(-3*h^2)
   @param distance = Euclidean()
-  @param neighbors = 5
+  @param neighbors = nothing
 end
 
 function solve(problem::EstimationProblem, solver::LocalWeightRegress)
@@ -62,7 +62,7 @@ function solve(problem::EstimationProblem, solver::LocalWeightRegress)
       w = varparams.weightfun
 
       # number of nearest neighbors
-      k = varparams.neighbors
+      k = isnothing(varparams.neighbors) ? ceil(Int, 0.2ndata) : varparams.neighbors
 
       @assert 0 < k ≤ ndata "invalid number of neighbors"
 
