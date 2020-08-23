@@ -52,8 +52,11 @@ function solve(problem::EstimationProblem, solver::LocalWeightRegress)
       # get variable type
       V = variables(problem)[var]
 
-      # get valid data for variable
-      X, z = valid(pdata, var)
+      # retrieve non-missing data
+      locs = findall(!ismissing, pdata[var])
+      𝒟 = view(pdata, locs)
+      X = coordinates(𝒟)
+      z = 𝒟[var]
 
       # number of data points for variable
       ndata = length(z)
@@ -75,11 +78,11 @@ function solve(problem::EstimationProblem, solver::LocalWeightRegress)
       end
 
       # pre-allocate memory for results
-      varμ = Vector{V}(undef, npoints(pdomain))
-      varσ = Vector{V}(undef, npoints(pdomain))
+      varμ = Vector{V}(undef, nelms(pdomain))
+      varσ = Vector{V}(undef, nelms(pdomain))
 
       # pre-allocate memory for coordinates
-      x = MVector{ndims(pdomain),coordtype(pdomain)}(undef)
+      x = MVector{ncoords(pdomain),coordtype(pdomain)}(undef)
 
       # estimation loop
       for location in traverse(pdomain, LinearPath())
