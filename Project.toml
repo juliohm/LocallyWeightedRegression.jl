@@ -1,7 +1,7 @@
 name = "LocallyWeightedRegression"
 uuid = "68d949f0-74a3-5070-a3ac-aa8145b4bcaa"
 author = "Júlio Hoffimann <julio.hoffimann@gmail.com>"
-version = "0.6.0"
+version = "0.6.1"
 
 [deps]
 Distances = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
@@ -13,7 +13,7 @@ StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
 
 [compat]
 Distances = "0.8, 0.9"
-GeoStatsBase = "0.11"
+GeoStatsBase = "0.12"
 NearestNeighbors = "0.4"
 StaticArrays = "0.12"
 julia = "1.4"
