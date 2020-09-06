@@ -28,7 +28,9 @@ Locally weighted regression (LOESS) estimation solver.
 
 ### References
 
-Cleveland 1979. *Robust locally weighted regression and smoothing scatterplots.*
+* Stone 1977. *Consistent non-parametric regression.*
+* Cleveland 1979. *Robust locally weighted regression and smoothing scatterplots.*
+* Cleveland & Grosse 1991. *Computational methods for local regression.*
 """
 @estimsolver LocalWeightRegress begin
   @param weightfun = h -> exp(-3*h^2)
